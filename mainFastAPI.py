@@ -10,7 +10,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://animeembeddingexplorer.onrender.com"],  #
-    allow_methods=["*"],
+    allow_methods=["https://animeembeddingexplorer-1.onrender.com"],
     allow_headers=["*"],
 )
 

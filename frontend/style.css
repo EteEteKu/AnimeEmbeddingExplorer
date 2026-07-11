@@ -1,119 +1,271 @@
 :root {
-  --bg: #0d0e14;
-  --surface: #181a24;
-  --text: #e4e4ec;
-  --text-dim: #8888a0;
-  --accent: #7c6fff;
-  --accent-glow: rgba(124, 111, 255, 0.35);
-  --font-main: -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", monospace;
+	--bg: #0d0e14;
+	--surface: #181a24;
+	--text: #e4e4ec;
+	--text-dim: #8888a0;
+	--accent: #7c6fff;
+	--accent-glow: rgba(124, 111, 255, 0.35);
+	--font-main: -apple-system, "Segoe UI", Roboto, sans-serif;
+	--font-mono: "JetBrains Mono", "SFMono-Regular", monospace;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+	overflow: hidden; 
 }
 
 body {
-  background:
-    radial-gradient(ellipse 800px 500px at 50% -10%, var(--accent-glow), transparent),
-    var(--bg);
-  color: var(--text);
-  font-family: var(--font-main);
-  min-height: 100vh;
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--font-main);
 }
 
-header {
-  text-align: center;
-  padding: 60px 20px 30px;
+
+
+.cloud-viewport {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	cursor: grab;
+	background:
+		radial-gradient(ellipse 900px 600px at 50% 20%, var(--accent-glow), transparent),
+		var(--bg);
+	z-index: 1;
 }
 
-h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--text), var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.cloud-viewport.dragging {
+	cursor: grabbing;
 }
+
+.cloud-container {
+	position: absolute;
+	width: 2400px;
+	height: 1600px;
+	top: 50%;
+	left: 50%;
+	margin-top: -800px;
+	margin-left: -1200px;
+}
+
+.empty-cloud-hint {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: var(--text-dim);
+	font-size: 1.1rem;
+	pointer-events: none;
+}
+
+.empty-cloud-hint.hidden {
+	display: none;
+}
+
+
+
+.overlay-ui {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+	pointer-events: none; 
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.overlay-ui header {
+	text-align: center;
+	padding: 30px 20px 16px;
+	pointer-events: none;
+}
+
+.overlay-ui h1 {
+	font-size: 1.8rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	background: linear-gradient(135deg, var(--text), var(--accent));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
 .search-section {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 20px;
+	width: 100%;
+	max-width: 520px;
+	padding: 0 20px;
+	pointer-events: auto; 
 }
 
 #search-input {
-  width: 100%;
-  padding: 16px 20px;
-  font-size: 1rem;
-  background: var(--surface);
-  border: 1px solid rgba(124, 111, 255, 0.2);
-  border-radius: 12px;
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	width: 100%;
+	padding: 14px 18px;
+	font-size: 1rem;
+	background: rgba(24, 26, 36, 0.85);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(124, 111, 255, 0.25);
+	border-radius: 12px;
+	color: var(--text);
+	outline: none;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #search-input::placeholder {
-  color: var(--text-dim);
+	color: var(--text-dim);
 }
 
 #search-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 .results-list {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-height: 60vh;
+	overflow-y: auto;
 }
 
+
 .anime-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px;
-  background: var(--surface);
-  border: 1px solid transparent;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 10px;
+	background: var(--surface);
+	border: 1px solid transparent;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+	animation: cardFadeIn 0.3s ease backwards;
+}
+
+.results-list .anime-card {
+	pointer-events: auto;
+	background: rgba(24, 26, 36, 0.9);
+	backdrop-filter: blur(8px);
 }
 
 .anime-card:hover {
-  background: #1f2230;
-  border-color: rgba(124, 111, 255, 0.3);
+	background: #1f2230;
+	border-color: rgba(124, 111, 255, 0.3);
 }
 
 .anime-card img {
-  width: 48px;
-  height: 68px;
-  object-fit: cover;
-  border-radius: 6px;
-  flex-shrink: 0;
+	width: 48px;
+	height: 68px;
+	object-fit: cover;
+	border-radius: 6px;
+	flex-shrink: 0;
 }
 
 .anime-card .info {
-  min-width: 0; /* нужно, чтобы text-overflow работал внутри flex */
+	min-width: 0;
 }
 
 .anime-card .name {
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .anime-card .meta {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  margin-top: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	color: var(--text-dim);
+	margin-top: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.similarity {
+	margin-left: auto;
+	font-family: var(--font-mono);
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: var(--accent);
+	padding-left: 12px;
+	flex-shrink: 0;
+}
+
+.empty-state {
+	padding: 16px;
+	text-align: center;
+	color: var(--text-dim);
+	font-size: 0.9rem;
+	pointer-events: auto;
+}
+
+@keyframes cardFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+
+.cloud-container .anime-card {
+	position: absolute;
+	width: 140px;
+	flex-direction: column;
+	text-align: center;
+	transform: translate(-50%, -50%);
+	pointer-events: auto;
+	animation: cloudFadeIn 0.4s ease backwards;
+}
+
+.cloud-container .anime-card img {
+	width: 90px;
+	height: 128px;
+	margin: 0 auto;
+}
+
+.cloud-container .anime-card .info {
+	width: 100%;
+}
+
+.cloud-container .center-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 160px;
+	z-index: 10;
+}
+
+@keyframes cloudFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.cloud-edges {
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	overflow: visible;
 }

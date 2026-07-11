@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Similarity Explorer</title>
-  <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Anime Similarity Explorer</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-       <h1>AnimeNebula</h1>
-    </header>
-    <main>
-    <section class="search-section">
-      <input
-        type="text"
-        id="search-input"
-        placeholder="Найди аниме..."
-        autocomplete="off"
-      >
-      <div id="search-results" class="results-list">
-        <div class="anime-card">
-          <img src="https://cdn.myanimelist.net/images/anime/11/39717.jpg" alt="Sword Art Online">
-          <div class="info">
-            <div class="name">Sword Art Online</div>
-            <div class="meta">Action, Adventure, Fantasy · 25 эп. · ★ 7.2</div>
-          </div>
-        </div>
-      </div>
-  </section>
-</main>
+
+
+	<div class="cloud-viewport" id="cloud-viewport">
+		<div id="similar-results" class="cloud-container"></div>
+		<div id="empty-cloud-hint" class="empty-cloud-hint">Найди аниме, чтобы увидеть его туманность</div>
+	</div>
+
+
+	<div class="overlay-ui">
+		<header>
+			<h1>AnimeNebula</h1>
+		</header>
+
+		<section class="search-section">
+			<input
+				type="text"
+				id="search-input"
+				placeholder="Найди аниме..."
+				autocomplete="off"
+			>
+			<div id="search-results" class="results-list"></div>
+		</section>
+	</div>
+
+	<script src="script.js"></script>
 </body>
 </html>

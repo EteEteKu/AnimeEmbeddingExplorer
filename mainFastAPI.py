@@ -5,7 +5,7 @@ from searchSimAnime import search_anime
 from searchAnime import searchAnime
 from fastapi.middleware.cors import CORSMiddleware
 
-DATAFRAME = pd.read_pickle(r"Animedataset\anime_processed.pkl")
+DATAFRAME = pd.read_pickle(r"Animedataset/anime_processed.pkl")
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,

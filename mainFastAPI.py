@@ -4,9 +4,6 @@ from pydantic import BaseModel
 import pandas as pd 
 from searchSimAnime import search_anime
 DATAFRAME = pd.read_pickle(r"Animedataset\anime_processed.pkl")
-
-
-
 app = FastAPI()
 
 class AnimeRequest(BaseModel):
@@ -28,7 +25,4 @@ def get_anime_similarity(request:AnimeRequest):
         "anime_id":request.anime_id,
         "similar": similar
     }
-@app.get("/")
-def read_root():
-    return {"message":"Hello world"}
 

@@ -16,7 +16,7 @@ def build_anime_dict(anime_id:int, sim:float, dataframe:pd.DataFrame):
     return{
         "anime_id":anime_id,
         "total_sim":float(sim), #np.float32 to float
-        "name": dataframe.at[anime_id,"Name"] if dataframe.at[anime_id,"English name"] == "UNKNOWN  " else dataframe.at[anime_id,"English name"],
+        "name": dataframe.at[anime_id,"Name"] if dataframe.at[anime_id,"English name"] == "UNKNOWN" else dataframe.at[anime_id,"English name"],
         "image_url":dataframe.at[anime_id,"Image URL"],
         "genres":dataframe.at[anime_id,"Genres"],
         "episodes": dataframe.at[anime_id,"Episodes"],

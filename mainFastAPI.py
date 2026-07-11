@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd 
@@ -23,3 +22,6 @@ def get_anime_similarity(request:AnimeRequest):
         "similar": similar
     }
 
+@app.get("/anime/search")
+def get_search_anime(anime_name:str,limit:int=10):
+    ...

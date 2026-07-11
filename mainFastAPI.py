@@ -9,7 +9,7 @@ DATAFRAME = pd.read_pickle(r"Animedataset/anime_processed.pkl")
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  #
+    allow_origins=["https://animeembeddingexplorer.onrender.com"],  #
     allow_methods=["*"],
     allow_headers=["*"],
 )

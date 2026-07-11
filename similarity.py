@@ -6,7 +6,7 @@ def genre_similarity(anime_id1: int, anime_id2: int, dataFrame: pd.DataFrame) ->
     genres2 = dataFrame.at[anime_id2, "Genres_set"]
     union = genres1 | genres2
     if len(union) == 0:
-        return 0.0
+        return 0.0 
     return len(genres1 & genres2) / len(union)
 def description_similarity(anime_id1: int, anime_id2: int,dataFrame: pd.DataFrame) -> float:
     vec1 = dataFrame.at[anime_id1, "embedding"].reshape(1, -1)
